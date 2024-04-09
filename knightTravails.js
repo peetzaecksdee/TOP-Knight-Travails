@@ -16,6 +16,8 @@ const isValid = ([moveX, moveY]) => {
 };
 
 function knightTravails(initial, end) {
+	if (!isValid(end)) return [0, []];
+
 	let queue = new Queue();
 	queue.enqueue([initial]);
 
@@ -39,13 +41,17 @@ function knightTravails(initial, end) {
 }
 
 function printTravail(res) {
+	if (res[0] === 0) {
+		console.log('Something is invalid with your input!');
+		return;
+	}
 	console.log(`You made it in ${res[0]} moves! Here's your path:`);
 	res[1].forEach((arr) => {
 		console.log(arr);
 	});
 }
 
-printTravail(knightTravails([3, 3], [4, 3]));
+printTravail(knightTravails([3, 3], [9, 3]));
 printTravail(knightTravails([5, 3], [7, 0]));
 printTravail(knightTravails([1, 7], [2, 5]));
 printTravail(knightTravails([0, 1], [1, 6]));
