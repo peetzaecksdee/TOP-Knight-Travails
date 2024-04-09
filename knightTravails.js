@@ -16,25 +16,26 @@ const isValid = ([moveX, moveY]) => {
 };
 
 function knightTravails(initial, end) {
-	if (!isValid(end)) return [0, []];
+	if (!isValid(end) || !isValid(initial)) return [0, []];
 
 	let queue = new Queue();
-	queue.enqueue([initial]);
+	queue.enqueue([initial]) // Array inside an array, [[], [], []]
 
 	while (!queue.isEmpty()) {
-		let path = queue.dequeue();
-		let [x, y] = path[path.length - 1];
+		let currPath = queue.dequeue(); // Get Position
+		let [x, y] = currPath[currPath.length - 1] // Get the current position which is the last array
 
 		if (x === end[0] && y === end[1]) {
-			return [path.length - 1, path];
+			return [currPath.length, currPath];
 		}
 
+		// Loops through Every moves until it found one
 		moves.forEach(([dx, dy]) => {
-			let nextMove = [x + dx, y + dy];
-			if (isValid(nextMove)) {
-				queue.enqueue(path.concat([nextMove]));
+			let newPos = [x + dx, y + dy];
+			if (isValid(newPos)) {
+				queue.enqueue(currPath.concat([newPos]));
 			}
-		});
+		}) 
 	}
 
 	return [0, []];
